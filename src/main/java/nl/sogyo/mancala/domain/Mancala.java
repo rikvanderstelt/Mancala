@@ -1,20 +1,13 @@
 package nl.sogyo.mancala.domain;
 
-import java.util.ArrayList;
-
 abstract class Container{
     private int numberOfBeads;
     private Container nextContainer;
     protected Player owner;
+    protected Container opposite;
 
     public Container(){
         numberOfBeads = 0;
-    }
-
-    public Container(Container nextContainer, Player owner){
-        numberOfBeads = 0;
-        this.nextContainer = nextContainer;
-        this.owner = new Player(true);
     }
 
     public void addBead(){
@@ -40,6 +33,15 @@ abstract class Container{
         }
         return output;
     }
+    public Container getOpposite() {
+        return opposite;
+    }
+
+    protected void setOpposite(Container opposite){
+        this.opposite = opposite;
+    }
+
+    public void emptyOpposite() {}
 
     public void setOwner(Player owner) {
         this.owner = owner;
@@ -61,6 +63,7 @@ abstract class Container{
 }
 
 class Pit extends Container {
+
     public Pit(){
         super();
         int i = 0;
@@ -68,6 +71,7 @@ class Pit extends Container {
         owner = new Player(true);
         this.setNextContainer(new Pit(i+1,owner));
         this.linkChain();
+        this.setOpposites();
     }
 
     public Pit(int i, Player owner){
@@ -80,13 +84,9 @@ class Pit extends Container {
             this.setNextContainer(new Kalaha(owner));
         }
     }
-    public Pit(Container nextContainer,Player owner){
-        super(nextContainer,owner);
-        this.addBead(4);
-    }
 
     public void linkChain(){
-        // Links a chain of 14 containers that starts with the container it is called upon
+        // Links a chain of 14 containers that starts with the container it is called upon.
         Container nextContainer = this.getNextContainer();
 
         for(int i=0; i<12; i++){
@@ -94,6 +94,32 @@ class Pit extends Container {
         }
         nextContainer.setNextContainer(this);
     }
+
+    public void setOpposites(){
+        this.opposite = this.getNextContainer(12);
+        for (int i = 1; i<13; i++){
+            this.getNextContainer(i).setOpposite(this.getNextContainer(12-i));
+        }
+    }
+
+    public void emptyOpposite(){
+        int beadsTransfered = this.opposite.emptyPit();
+//        System.out.println(beadsTransfered);
+        this.opponentKalaha().addBead(beadsTransfered);
+        System.out.println(this.opponentKalaha().getNumberOfBeads());
+    }
+
+    public Kalaha opponentKalaha(){
+        int j = 0;
+
+        for (int i=8;i<14;i++){                  // The opponents kalaha is between 8 and 14 steps away from a pit
+            if(this.getNextContainer(i) instanceof Kalaha){
+                j=i;
+            }
+        }
+        return (Kalaha) this.getNextContainer(j);  //
+    }
+
 }
 
 class Kalaha extends Container{

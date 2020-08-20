@@ -22,16 +22,14 @@ public class MancalaTest {
     @Test
     public void testGetNextPit(){
         Player player1 = new Player(true);
-        Pit pit2 = new Pit();
-        Pit pit1 = new Pit(pit2,player1);
-        Assert.assertEquals("A neighbouring pit must be able to be found ", pit1.getNextContainer(),pit2);
+        Pit pit1 = new Pit();
+        Assert.assertTrue("A neighbouring pit must be able to be found ", pit1.getNextContainer() instanceof Pit);
     }
 
     @Test
     public void testIsOwnersTurn(){
-        Pit pit2 = new Pit();
+        Pit pit1 = new Pit();
         Player player1 = new Player(true);
-        Pit pit1 = new Pit(pit2,player1);
 
         Assert.assertTrue(pit1.isOwnersTurn());
     }
@@ -81,5 +79,32 @@ public class MancalaTest {
 
         Assert.assertTrue(pit1.getNextContainer(6) instanceof Kalaha);
         Assert.assertTrue(pit1.getNextContainer(13) instanceof Kalaha);
+    }
+
+    @Test
+    public void testContainerOwnership(){
+        Pit pit1 = new Pit();
+
+        Assert.assertTrue(pit1.isOwnersTurn() == pit1.getNextContainer(6).isOwnersTurn());
+        Assert.assertTrue(pit1.getNextContainer(13).isOwnersTurn() != pit1.getNextContainer(4).isOwnersTurn());
+        Assert.assertTrue(pit1.getNextContainer(10).isOwnersTurn() == pit1.getNextContainer(7).isOwnersTurn());
+    }
+
+    @Test
+    public void testPitOpposites(){
+        Pit pit1 = new Pit();
+
+        Assert.assertEquals(pit1.getOpposite(), pit1.getNextContainer(12));
+        Assert.assertEquals(pit1.getNextContainer(3).getOpposite(),pit1.getNextContainer(9));
+    }
+
+    @Test
+    public void testEmptyOpposite(){
+        Pit pit1 = new Pit();
+
+        pit1.getNextContainer(8).emptyOpposite();
+
+        Assert.assertEquals(0,pit1.getNextContainer(4).getNumberOfBeads());
+        Assert.assertEquals(4,pit1.getNextContainer(6).getNumberOfBeads());
     }
 }
