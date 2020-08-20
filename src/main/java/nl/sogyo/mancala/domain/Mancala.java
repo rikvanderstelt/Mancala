@@ -5,7 +5,7 @@ import java.util.ArrayList;
 abstract class Container{
     private int numberOfBeads;
     private Container nextContainer;
-    private Player owner;
+    protected Player owner;
 
     public Container(){
         numberOfBeads = 0;
@@ -33,6 +33,18 @@ abstract class Container{
         return nextContainer;
     }
 
+    public Container getNextContainer(int numberOfSteps){
+        Container output = this.getNextContainer();
+        for (int j=0; j<(numberOfSteps -1); j++) {
+            output = output.getNextContainer();
+        }
+        return output;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+
     public boolean isOwnersTurn() {
         return owner.isMyTurn();
     }
@@ -46,17 +58,6 @@ abstract class Container{
         numberOfBeads = 0;
         return output;
     }
-
-    public static ArrayList<Container> buildBoard() {
-        ArrayList<Container> output = new ArrayList<Container>(14);
-        Player player1 = new Player(true);
-        Player player2 = new Player(false);
-        Kalaha kalaha2 = new Kalaha();
-        Pit pit0 = new Pit();
-        Pit pit1 = new Pit();
-        output.add(new Pit());
-        return output;
-    }
 }
 
 class Pit extends Container {
@@ -64,15 +65,19 @@ class Pit extends Container {
         super();
         int i = 0;
         this.addBead(4);
-        this.setNextContainer(new Pit(i));
+        owner = new Player(true);
+        this.setNextContainer(new Pit(i+1,owner));
         this.linkChain();
     }
 
-    public Pit(int i){
+    public Pit(int i, Player owner){
         super();
-        if (i<14) {
-            this.addBead(i);
-            this.setNextContainer(new Pit(i + 1));
+        this.owner = owner;
+        this.addBead(4);
+        if (i<5) {
+            this.setNextContainer(new Pit(i + 1,owner));
+        } else {
+            this.setNextContainer(new Kalaha(owner));
         }
     }
     public Pit(Container nextContainer,Player owner){
@@ -81,10 +86,10 @@ class Pit extends Container {
     }
 
     public void linkChain(){
-        // Links a chain of containers that starts with the container it is called upon
+        // Links a chain of 14 containers that starts with the container it is called upon
         Container nextContainer = this.getNextContainer();
 
-        for(int i=0; i<13; i++){
+        for(int i=0; i<12; i++){
             nextContainer = nextContainer.getNextContainer();
         }
         nextContainer.setNextContainer(this);
@@ -92,7 +97,15 @@ class Pit extends Container {
 }
 
 class Kalaha extends Container{
-
+    public Kalaha(Player owner){
+        super();
+        this.owner = owner;
+        if(this.isOwnersTurn()){
+            Player player2 = new Player(false);
+            owner.makeOpponents(player2);
+            this.setNextContainer(new Pit(0,player2));
+        }
+    }
 }
 
 

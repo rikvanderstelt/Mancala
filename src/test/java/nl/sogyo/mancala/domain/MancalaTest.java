@@ -12,8 +12,10 @@ public class MancalaTest {
     @Test
     public void testgetNumberOfBeads() {
         Pit pit1 = new Pit();
+        Player player1 = new Player(true);
+
         Assert.assertEquals("Newly made pit should have 4 beads",4, pit1.getNumberOfBeads());
-        Kalaha kalaha1 = new Kalaha();
+        Kalaha kalaha1 = new Kalaha(player1);
         Assert.assertEquals("Newly made kalaha should have 0 beads",0, kalaha1.getNumberOfBeads());
     }
 
@@ -70,8 +72,14 @@ public class MancalaTest {
         Pit pit1 = new Pit();
 
         Assert.assertEquals(pit1,pit1
-                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer()
-                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer()
-                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer());
+                .getNextContainer(14));
+    }
+
+    @Test
+    public void testSettingUpKalahas(){
+        Pit pit1 = new Pit();
+
+        Assert.assertTrue(pit1.getNextContainer(6) instanceof Kalaha);
+        Assert.assertTrue(pit1.getNextContainer(13) instanceof Kalaha);
     }
 }
