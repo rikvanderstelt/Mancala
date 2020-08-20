@@ -3,6 +3,9 @@ package nl.sogyo.mancala.domain;
 
 import org.junit.Assert;
 import org.junit.Test;
+import java.util.stream.IntStream;
+
+import java.util.ArrayList;
 
 public class MancalaTest {
 
@@ -32,6 +35,17 @@ public class MancalaTest {
     }
 
     @Test
+    public void testEmptyPit(){
+        Pit pit1 = new Pit();
+
+        int testbeads = pit1.emptyPit();
+
+        Assert.assertEquals(4,testbeads);
+        Assert.assertEquals(pit1.getNumberOfBeads(),0);
+    }
+
+
+    @Test
     public void testFlipSelf() {
         Player player1 = new Player(true);
 
@@ -49,5 +63,15 @@ public class MancalaTest {
         player2.flipOpponent();
 
         Assert.assertFalse(player1.isMyTurn());
+    }
+
+    @Test
+    public void testChainBuilding(){
+        Pit pit1 = new Pit();
+
+        Assert.assertEquals(pit1,pit1
+                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer()
+                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer()
+                .getNextContainer().getNextContainer().getNextContainer().getNextContainer().getNextContainer());
     }
 }
