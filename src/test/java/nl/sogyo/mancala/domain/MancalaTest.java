@@ -102,7 +102,14 @@ public class MancalaTest {
         pit1.getNextContainer(8).emptyOpposite();
 
         Assert.assertEquals(0,pit1.getNextContainer(4).getNumberOfBeads());
-        Assert.assertEquals(4,pit1.getNextContainer(6).getNumberOfBeads());
+        Assert.assertEquals(4,pit1.getNextContainer(13).getNumberOfBeads());
+    }
+
+    @Test
+    public void testPlayerCreation(){
+        Pit pit1 = new Pit();
+
+        Assert.assertEquals(pit1.owner,pit1.getNextContainer(7).owner.getOpponent());
     }
 
     @Test
@@ -116,7 +123,7 @@ public class MancalaTest {
         Assert.assertEquals(5, pit1.getNextContainer(2).getNumberOfBeads());
         Assert.assertEquals(4, pit1.getNextContainer(3).getNumberOfBeads());
     }
-
+    @Test
     public void testPlayPit(){
         Pit pit1 = new Pit();
 
@@ -127,4 +134,38 @@ public class MancalaTest {
         Assert.assertEquals(5, pit1.getNextContainer(4).getNumberOfBeads());
         Assert.assertEquals(4, pit1.getNextContainer(5).getNumberOfBeads());
     }
+
+    @Test
+    public void testPassOverKalahas() {
+        Pit pit1 = new Pit();
+        pit1.addBead(12);
+
+        pit1.playPit();
+
+        Assert.assertEquals(1,pit1.getNumberOfBeads());
+        Assert.assertEquals(6,pit1.getNextContainer(3).getNumberOfBeads());
+        Assert.assertEquals(1,pit1.getNextContainer(6).getNumberOfBeads());
+        Assert.assertEquals(0,pit1.getNextContainer(13).getNumberOfBeads());
+    }
+
+    @Test
+    public void testEndingTurnOnPit(){  // No further special cases for the turn ending
+        Pit pit1 = new Pit();
+
+        pit1.getNextContainer(1).playPit();
+
+        Assert.assertTrue(!pit1.isOwnersTurn());
+        Assert.assertTrue(pit1.getNextContainer(12).isOwnersTurn());
+    }
+
+    @Test
+    public void testEndingTurnOnKalaha(){
+        Pit pit1 = new Pit();
+
+        pit1.getNextContainer(2).playPit();
+
+        Assert.assertTrue(pit1.isOwnersTurn());
+        Assert.assertTrue(!pit1.getNextContainer(12).isOwnersTurn());
+    }
+
 }

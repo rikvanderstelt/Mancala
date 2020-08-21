@@ -1,5 +1,7 @@
 package nl.sogyo.mancala.domain;
 
+import org.junit.Assert;
+
 abstract class Container{
     private int numberOfBeads;
     private Container nextContainer;
@@ -38,7 +40,7 @@ abstract class Container{
     }
 
     public abstract void emptyOpposite();
-
+    public abstract void playPit();
     public abstract void passBeads(int beadsPassed);
 
     public boolean isOwnersTurn() {
@@ -74,7 +76,7 @@ class Pit extends Container {
         this.addBead(4);
         if (i<5) {
             this.setNextContainer(new Pit(i + 1,owner));
-        } else {
+        } else if (i==5) {
             this.setNextContainer(new Kalaha(owner));
         }
     }
@@ -98,32 +100,39 @@ class Pit extends Container {
 
     public void emptyOpposite(){
         int beadsTransfered = this.opposite.emptyPit();
-        this.opponentKalaha().addBead(beadsTransfered);
+        this.myKalaha().addBead(beadsTransfered);
     }
 
-    public Kalaha opponentKalaha(){
+    public Kalaha myKalaha(){
         int j = 0;
 
-        for (int i=8;i<14;i++){               // The opponents kalaha is between 8 and 14 steps away from a pit
+        for (int i=1;i<7;i++){             // Your kalaha is between 1 and 6 steps away from a pit
             if(this.getNextContainer(i) instanceof Kalaha){
                 j=i;
             }
         }
-        return (Kalaha) this.getNextContainer(j);  //
+        return (Kalaha) this.getNextContainer(j);
     }
 
     public void passBeads(int beadsPassed){
         if (beadsPassed > 1){
             this.addBead();
             this.getNextContainer().passBeads(beadsPassed-1);
-        } else{
+        } else if (beadsPassed == 1){
             this.addBead();
+            this.endTurn();
         }
     }
 
     public void playPit(){
+        Assert.assertTrue(this.isOwnersTurn());
         int beadsPassed = this.emptyPit();
         this.getNextContainer().passBeads(beadsPassed);
+    }
+
+    public void endTurn(){
+        this.owner.flipSelf();
+        this.owner.flipOpponent();
     }
 
 }
@@ -132,7 +141,7 @@ class Kalaha extends Container{
     public Kalaha(Player owner){
         super();
         this.owner = owner;
-        if(this.isOwnersTurn()){
+        if(this.isOwnersTurn()){     // Only creates a second player the first time a kalaha is made
             Player player2 = new Player(false);
             owner.makeOpponents(player2);
             this.setNextContainer(new Pit(0,player2));
@@ -141,7 +150,15 @@ class Kalaha extends Container{
 
     public void emptyOpposite(){}
 
+    public void playPit() {System.out.println("Error: Tried playing a kalaha");}
+
     public void passBeads(int beadsPassed){
+        if (isOwnersTurn()){
+            this.addBead();
+            this.getNextContainer().passBeads(beadsPassed-1);
+        } else{
+            this.getNextContainer().passBeads(beadsPassed);
+        }
 
     }
 }
@@ -150,6 +167,10 @@ class Kalaha extends Container{
 class Player {
     private boolean myTurn;
     private Player opponent;
+
+    public Player getOpponent(){
+        return opponent;
+    }
 
     public Player(boolean myTurn){
         this.myTurn = myTurn;
