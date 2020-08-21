@@ -37,15 +37,9 @@ abstract class Container{
         return opposite;
     }
 
-    protected void setOpposite(Container opposite){
-        this.opposite = opposite;
-    }
+    public abstract void emptyOpposite();
 
-    public void emptyOpposite() {}
-
-    public void setOwner(Player owner) {
-        this.owner = owner;
-    }
+    public abstract void passBeads(int beadsPassed);
 
     public boolean isOwnersTurn() {
         return owner.isMyTurn();
@@ -98,26 +92,38 @@ class Pit extends Container {
     public void setOpposites(){
         this.opposite = this.getNextContainer(12);
         for (int i = 1; i<13; i++){
-            this.getNextContainer(i).setOpposite(this.getNextContainer(12-i));
+            this.getNextContainer(i).opposite =this.getNextContainer(12-i);
         }
     }
 
     public void emptyOpposite(){
         int beadsTransfered = this.opposite.emptyPit();
-//        System.out.println(beadsTransfered);
         this.opponentKalaha().addBead(beadsTransfered);
-        System.out.println(this.opponentKalaha().getNumberOfBeads());
     }
 
     public Kalaha opponentKalaha(){
         int j = 0;
 
-        for (int i=8;i<14;i++){                  // The opponents kalaha is between 8 and 14 steps away from a pit
+        for (int i=8;i<14;i++){               // The opponents kalaha is between 8 and 14 steps away from a pit
             if(this.getNextContainer(i) instanceof Kalaha){
                 j=i;
             }
         }
         return (Kalaha) this.getNextContainer(j);  //
+    }
+
+    public void passBeads(int beadsPassed){
+        if (beadsPassed > 1){
+            this.addBead();
+            this.getNextContainer().passBeads(beadsPassed-1);
+        } else{
+            this.addBead();
+        }
+    }
+
+    public void playPit(){
+        int beadsPassed = this.emptyPit();
+        this.getNextContainer().passBeads(beadsPassed);
     }
 
 }
@@ -131,6 +137,12 @@ class Kalaha extends Container{
             owner.makeOpponents(player2);
             this.setNextContainer(new Pit(0,player2));
         }
+    }
+
+    public void emptyOpposite(){}
+
+    public void passBeads(int beadsPassed){
+
     }
 }
 

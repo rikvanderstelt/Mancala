@@ -3,9 +3,6 @@ package nl.sogyo.mancala.domain;
 
 import org.junit.Assert;
 import org.junit.Test;
-import java.util.stream.IntStream;
-
-import java.util.ArrayList;
 
 public class MancalaTest {
 
@@ -106,5 +103,28 @@ public class MancalaTest {
 
         Assert.assertEquals(0,pit1.getNextContainer(4).getNumberOfBeads());
         Assert.assertEquals(4,pit1.getNextContainer(6).getNumberOfBeads());
+    }
+
+    @Test
+    public void testPassBeads(){
+        Pit pit1 = new Pit();
+
+        pit1.passBeads(3);
+
+        Assert.assertEquals(5,pit1.getNumberOfBeads());
+        Assert.assertEquals(5, pit1.getNextContainer().getNumberOfBeads());
+        Assert.assertEquals(5, pit1.getNextContainer(2).getNumberOfBeads());
+        Assert.assertEquals(4, pit1.getNextContainer(3).getNumberOfBeads());
+    }
+
+    public void testPlayPit(){
+        Pit pit1 = new Pit();
+
+        pit1.playPit();
+
+        Assert.assertEquals(0,pit1.getNumberOfBeads());
+        Assert.assertEquals(5, pit1.getNextContainer().getNumberOfBeads());
+        Assert.assertEquals(5, pit1.getNextContainer(4).getNumberOfBeads());
+        Assert.assertEquals(4, pit1.getNextContainer(5).getNumberOfBeads());
     }
 }
