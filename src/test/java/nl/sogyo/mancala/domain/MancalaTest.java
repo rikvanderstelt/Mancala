@@ -168,4 +168,33 @@ public class MancalaTest {
         Assert.assertTrue(!pit1.getNextContainer(12).isOwnersTurn());
     }
 
+    @Test
+    public void testEndingTurnOnEmptyPit(){ //Situation: pit 1 empty, pit 6 filled with 8, pit 13 with 4.
+        Pit pit1 = new Pit();
+        int i = pit1.emptyPit();
+        pit1.getNextContainer(5).addBead(4);
+
+        pit1.getNextContainer(5).playPit();
+
+        Assert.assertEquals(0,pit1.getNumberOfBeads());
+        Assert.assertEquals(0,pit1.getNextContainer(12).getNumberOfBeads());
+        Assert.assertEquals(7,pit1.myKalaha().getNumberOfBeads());
+        // Kalaha should have 1 dropped in it during the play, 5 from pit 13(1 is added by the play) and 1 from pit 1.
+    }
+
+    @Test
+    public void testMultipleMoves(){
+        Pit pit1 = new Pit();
+
+        pit1.getNextContainer(2).playPit();
+        pit1.getNextContainer(5).playPit();
+        pit1.getNextContainer(8).playPit();
+        pit1.getNextContainer(9).playPit();
+        pit1.getNextContainer(4).playPit();
+
+        Assert.assertEquals(3,pit1.myKalaha().getNumberOfBeads());
+        Assert.assertEquals(1,pit1.getNextContainer(9).getNumberOfBeads());
+        Assert.assertEquals(6,pit1.getNextContainer(12).getNumberOfBeads());
+        Assert.assertEquals(5,pit1.getNumberOfBeads());
+    }
 }

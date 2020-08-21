@@ -131,6 +131,11 @@ class Pit extends Container {
     }
 
     public void endTurn(){
+        if((this.getNumberOfBeads() == 1)&&(this.isOwnersTurn())){
+            this.emptyOpposite();
+            this.myKalaha().addBead();
+            this.emptyPit();
+        }
         this.owner.flipSelf();
         this.owner.flipOpponent();
     }
