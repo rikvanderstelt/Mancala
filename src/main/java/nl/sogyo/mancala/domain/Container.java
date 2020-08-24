@@ -37,7 +37,7 @@ abstract class Container{
         return opposite;
     }
 
-    public abstract void emptyOpposite();
+    public abstract void stealFromOpposite();
     public abstract void playPit();
     public abstract void passBeads(int beadsPassed);
     public abstract boolean gameOverCheck();

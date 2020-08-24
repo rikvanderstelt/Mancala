@@ -5,13 +5,13 @@ class Kalaha extends Container{
         super();
         this.owner = owner;
         if(this.isOwnersTurn()){     // Only creates a second player the first time a kalaha is made
-            Player player2 = new Player(false);
+            Player player2 = new Player(false, "Player 2");
             owner.makeOpponents(player2);
             this.setNextContainer(new Pit(0,player2));
         }
     }
 
-    public void emptyOpposite(){}
+    public void stealFromOpposite(){}
 
     public void playPit() {System.out.println("Error: Tried playing a kalaha");}
 

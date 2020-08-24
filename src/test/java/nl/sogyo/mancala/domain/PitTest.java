@@ -7,7 +7,7 @@ public class PitTest {
     @Test
     public void testgetNumberOfBeads() {
         Pit pit1 = new Pit();
-        Player player1 = new Player(true);
+        Player player1 = new Player(true, "player1");
 
         Assert.assertEquals("Newly made pit should have 4 beads",4, pit1.getNumberOfBeads());
         Kalaha kalaha1 = new Kalaha(player1);
@@ -54,13 +54,13 @@ public class PitTest {
     }
 
     @Test
-    public void testEmptyOpposite(){
+    public void testStealFromOpposite(){
         Pit pit1 = new Pit();
-
-        pit1.getNextContainer(8).emptyOpposite();
+        pit1.getNextContainer(8).emptyPit();
+        pit1.getNextContainer(8).stealFromOpposite();
 
         Assert.assertEquals(0,pit1.getNextContainer(4).getNumberOfBeads());
-        Assert.assertEquals(4,pit1.getNextContainer(13).getNumberOfBeads());
+        Assert.assertEquals(5,pit1.getNextContainer(13).getNumberOfBeads());
     }
     @Test
     public void testPassBeads(){
@@ -91,7 +91,7 @@ public class PitTest {
 
         pit1.getNextContainer(1).playPit();
 
-        Assert.assertTrue(!pit1.isOwnersTurn());
+        Assert.assertFalse(pit1.isOwnersTurn());
         Assert.assertTrue(pit1.getNextContainer(12).isOwnersTurn());
     }
 
@@ -126,7 +126,7 @@ public class PitTest {
     }
 
     @Test
-    public void testGameEndCheck(){
+    public void testIsGameOver(){
         Pit pit1 = new Pit();
         pit1.playPit();
         for(int i=7; i<13;i++){
@@ -134,6 +134,22 @@ public class PitTest {
         }
 
         Assert.assertTrue("Game should be over",pit1.isGameOver());
+    }
+
+    @Test
+    public void testFinalScoring(){
+        Pit pit1 = new Pit();
+        pit1.emptyPit();
+        pit1.getNextContainer(6).addBead(5);
+        pit1.getNextContainer(13).addBead(3);// so that player 1 has 5 points, player 2 has 3.
+        for(int i=1; i<6; i++){
+            pit1.getNextContainer(i).emptyPit();
+        }
+
+        int[] finalScores = pit1.gameEndCheck();
+        int[] correctScores = {5,3};
+
+        Assert.assertArrayEquals(finalScores, correctScores);
     }
 
 

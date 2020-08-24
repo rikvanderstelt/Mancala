@@ -8,7 +8,7 @@ class Pit extends Container {
         super();
         int i = 0;
         this.addBead(4);
-        owner = new Player(true);
+        owner = new Player(true, "Player 1");
         this.setNextContainer(new Pit(i+1,owner));
         this.getNextContainer(13).setNextContainer(this);  // Completes the circle
         this.setOpposites();
@@ -32,9 +32,11 @@ class Pit extends Container {
         }
     }
 
-    public void emptyOpposite(){
+    public void stealFromOpposite(){
         int beadsStolen = this.opposite.emptyPit();
         this.myKalaha().addBead(beadsStolen);
+        this.emptyPit();
+        this.myKalaha().addBead();
     }
 
     public Kalaha myKalaha(){
@@ -66,9 +68,7 @@ class Pit extends Container {
 
     public void endTurn(){
         if((this.getNumberOfBeads() == 1)&&(this.isOwnersTurn())){
-            this.emptyOpposite();
-            this.emptyPit();
-            this.myKalaha().addBead();
+            this.stealFromOpposite();
         }
         this.owner.flipSelf();
         this.owner.flipOpponent();
@@ -78,7 +78,7 @@ class Pit extends Container {
         if(isOwnersTurn()){
             return this.gameOverCheck();
         } else{
-            return this.getNextContainer(7).gameOverCheck();
+            return this.getNextContainer(7).gameOverCheck(); // Checks only for the player whose turn it is.
         }
     }
 
@@ -88,5 +88,33 @@ class Pit extends Container {
             output = this.getNextContainer().gameOverCheck();
         }
         return output;
+    }
+    // The final scores are returned in an array to make it easy to test them.
+    public int[] gameEndCheck(){
+        int[] finalScores = new int[2];
+
+        if(isGameOver()){
+            finalScores[0] = this.myKalaha().emptyPit();
+            finalScores[1] = this.myKalaha().getNextContainer(7).emptyPit();
+
+            this.printFinalScores();
+        }
+        return finalScores;
+    }
+
+    public void printFinalScores(){  // This function feels long, yet I can't see an obvious way to split it up.
+        int ownScore = this.myKalaha().emptyPit();
+        int opponentScore = this.myKalaha().getNextContainer(7).emptyPit();
+
+        System.out.println(this.owner + " has scored " + ownScore + " points");
+        System.out.println(this.owner.getOpponent() + " has scored " + opponentScore + " points");
+
+        if (ownScore > opponentScore) {
+            System.out.println("The winner is: " + this.owner );
+        } else if (ownScore < opponentScore){
+            System.out.println("The winner is: " + this.owner.getOpponent());
+        } else {
+            System.out.println("The game has ended in a draw!");
+        }
     }
 }

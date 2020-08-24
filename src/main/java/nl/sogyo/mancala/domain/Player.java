@@ -5,18 +5,23 @@ import org.junit.Assert;
 class Player {
     private boolean myTurn;
     private Player opponent;
+    private String name;
 
     public Player getOpponent(){
         return opponent;
     }
 
-    public Player(boolean myTurn){
+    public Player(boolean myTurn, String name){
+
         this.myTurn = myTurn;
+        this.name = name;
     }
 
     public boolean isMyTurn() {
         return myTurn;
     }
+
+    public String toString() {return name;}
 
     public void makeOpponents(Player player2){
         if(myTurn != player2.myTurn){
