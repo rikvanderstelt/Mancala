@@ -153,4 +153,29 @@ public class PitTest {
     }
 
 
+    /* The code below plays an entire, randomised game. Not a unit test,but it was very useful as I discovered
+    a bug where playing an empty pit could create a new bead using this. Still I have commented it out as
+    it is not technically supposed to be here.
+     */
+
+    /*
+    @Test
+    public void gameTest(){
+        Pit pit1 = new Pit();
+
+        while (true){
+            pit1.gameEndCheck();
+            if (pit1.isGameOver()){
+                break;
+            }
+            Assert.assertEquals( 48,pit1.totalBeadNumber());
+            int random = 1 + (int) (Math.random()*(14));
+            try {
+                pit1.getNextContainer(random).playPit();
+            } catch(AssertionError e){  // Makes sure no invalid moves are played
+            }
+        }
+    }
+
+    */
 }

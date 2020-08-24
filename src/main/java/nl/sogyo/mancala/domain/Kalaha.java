@@ -1,5 +1,7 @@
 package nl.sogyo.mancala.domain;
 
+import org.junit.Assert;
+
 class Kalaha extends Container{
     public Kalaha(Player owner){
         super();
@@ -13,7 +15,10 @@ class Kalaha extends Container{
 
     public void stealFromOpposite(){}
 
-    public void playPit() {System.out.println("Error: Tried playing a kalaha");}
+    public void playPit()  {
+        Assert.assertTrue(false);  // TODO: throw a proper exception
+        System.out.println("Error: Tried playing a kalaha");
+    }
 
     // Ending the turn in a kalaha changes nothing about the turn state, so no need to implement any
     // method for ending the turn.

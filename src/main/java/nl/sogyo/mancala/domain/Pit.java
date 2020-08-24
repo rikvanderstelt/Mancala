@@ -62,7 +62,10 @@ class Pit extends Container {
 
     public void playPit(){
         Assert.assertTrue(this.isOwnersTurn());
+        Assert.assertTrue(this.getNumberOfBeads() != 0);
+
         int beadsPassed = this.emptyPit();
+
         this.getNextContainer().passBeads(beadsPassed);
     }
 
@@ -115,5 +118,14 @@ class Pit extends Container {
         } else {
             System.out.println("The game has ended in a draw!");
         }
+    }
+
+    public int totalBeadNumber(){  // This function was used for debugging the randomly played game.
+        int totalBeadNumber = this.getNumberOfBeads();
+        for(int i=1; i<14; i++){
+            totalBeadNumber += this.getNextContainer(i).getNumberOfBeads();
+        //    System.out.println(this.getNextContainer(i).getNumberOfBeads());
+        }
+        return totalBeadNumber;
     }
 }
