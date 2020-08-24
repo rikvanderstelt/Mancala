@@ -97,14 +97,13 @@ class Pit extends Container {
             finalScores[0] = this.myKalaha().emptyPit();
             finalScores[1] = this.myKalaha().getNextContainer(7).emptyPit();
 
-            this.printFinalScores();
+            this.printFinalScores(finalScores[0],finalScores[1]);
         }
         return finalScores;
     }
-
-    public void printFinalScores(){  // This function feels long, yet I can't see an obvious way to split it up.
-        int ownScore = this.myKalaha().emptyPit();
-        int opponentScore = this.myKalaha().getNextContainer(7).emptyPit();
+    // It feels wrong to pass the scores in as variables here, but putting the printing in the above function
+    // would make it really long.
+    public void printFinalScores(int ownScore, int opponentScore){
 
         System.out.println(this.owner + " has scored " + ownScore + " points");
         System.out.println(this.owner.getOpponent() + " has scored " + opponentScore + " points");
