@@ -169,7 +169,7 @@ public class MancalaTest {
     }
 
     @Test
-    public void testEndingTurnOnEmptyPit(){ //Situation: pit 1 empty, pit 6 filled with 8, pit 13 with 4.
+    public void testStealing(){ //Situation: pit 1 empty, pit 6 filled with 8, pit 13 with 4.
         Pit pit1 = new Pit();
         int i = pit1.emptyPit();
         pit1.getNextContainer(5).addBead(4);
@@ -197,4 +197,16 @@ public class MancalaTest {
         Assert.assertEquals(6,pit1.getNextContainer(12).getNumberOfBeads());
         Assert.assertEquals(5,pit1.getNumberOfBeads());
     }
+
+    @Test
+    public void testGameEndCheck(){
+        Pit pit1 = new Pit();
+        pit1.playPit();
+        for(int i=7; i<13;i++){
+            pit1.getNextContainer(i).emptyPit();
+        }
+
+        Assert.assertTrue("Game should be over",pit1.isGameOver());
+    }
+
 }

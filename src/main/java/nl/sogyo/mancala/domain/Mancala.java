@@ -42,6 +42,7 @@ abstract class Container{
     public abstract void emptyOpposite();
     public abstract void playPit();
     public abstract void passBeads(int beadsPassed);
+    public abstract boolean gameOverCheck();
 
     public boolean isOwnersTurn() {
         return owner.isMyTurn();
@@ -66,7 +67,7 @@ class Pit extends Container {
         this.addBead(4);
         owner = new Player(true);
         this.setNextContainer(new Pit(i+1,owner));
-        this.linkChain();
+        this.getNextContainer(13).setNextContainer(this);  // Completes the circle
         this.setOpposites();
     }
 
@@ -81,16 +82,6 @@ class Pit extends Container {
         }
     }
 
-    public void linkChain(){
-        // Links a chain of 14 containers that starts with the container it is called upon.
-        Container nextContainer = this.getNextContainer();
-
-        for(int i=0; i<12; i++){
-            nextContainer = nextContainer.getNextContainer();
-        }
-        nextContainer.setNextContainer(this);
-    }
-
     public void setOpposites(){
         this.opposite = this.getNextContainer(12);
         for (int i = 1; i<13; i++){
@@ -99,8 +90,8 @@ class Pit extends Container {
     }
 
     public void emptyOpposite(){
-        int beadsTransfered = this.opposite.emptyPit();
-        this.myKalaha().addBead(beadsTransfered);
+        int beadsStolen = this.opposite.emptyPit();
+        this.myKalaha().addBead(beadsStolen);
     }
 
     public Kalaha myKalaha(){
@@ -133,11 +124,29 @@ class Pit extends Container {
     public void endTurn(){
         if((this.getNumberOfBeads() == 1)&&(this.isOwnersTurn())){
             this.emptyOpposite();
-            this.myKalaha().addBead();
             this.emptyPit();
+            this.myKalaha().addBead();
         }
         this.owner.flipSelf();
         this.owner.flipOpponent();
+    }
+
+   public boolean isGameOver(){
+        if(isOwnersTurn()){
+            boolean output = this.gameOverCheck();
+            return output;
+        } else{
+            boolean output = this.getNextContainer(7).gameOverCheck();
+            return output;
+        }
+    }
+
+    public boolean gameOverCheck(){
+        boolean output = false;
+        if(this.getNumberOfBeads() == 0){
+            output = this.getNextContainer().gameOverCheck();
+        }
+        return output;
     }
 
 }
@@ -157,6 +166,8 @@ class Kalaha extends Container{
 
     public void playPit() {System.out.println("Error: Tried playing a kalaha");}
 
+    // Ending the turn in a kalaha changes nothing about the turn state, so no need to implement any
+    // method for ending the turn.
     public void passBeads(int beadsPassed){
         if (isOwnersTurn()){
             this.addBead();
@@ -164,7 +175,10 @@ class Kalaha extends Container{
         } else{
             this.getNextContainer().passBeads(beadsPassed);
         }
+    }
 
+    public boolean gameOverCheck(){
+        return true;
     }
 }
 
