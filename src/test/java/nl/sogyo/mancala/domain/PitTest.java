@@ -7,7 +7,7 @@ public class PitTest {
     @Test
     public void testgetNumberOfBeads() {
         Pit pit1 = new Pit();
-        Player player1 = new Player(true, "player1");
+        Player player1 = new Player();
 
         Assert.assertEquals("Newly made pit should have 4 beads",4, pit1.getNumberOfBeads());
         Kalaha kalaha1 = new Kalaha(player1);
@@ -16,7 +16,6 @@ public class PitTest {
 
     @Test
     public void testGetNextPit(){
-       // Player player1 = new Player(true);
         Pit pit1 = new Pit();
         Assert.assertTrue("A neighbouring pit must be able to be found ", pit1.getNextContainer() instanceof Pit);
     }
@@ -158,7 +157,7 @@ public class PitTest {
     it is not technically supposed to be here.
      */
 
-    /*
+
     @Test
     public void gameTest(){
         Pit pit1 = new Pit();
@@ -177,5 +176,5 @@ public class PitTest {
         }
     }
 
-    */
+
 }

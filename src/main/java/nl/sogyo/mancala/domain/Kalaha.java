@@ -6,15 +6,15 @@ class Kalaha extends Container{
 
     public Kalaha(Player owner){
         super(owner);
-
     }
 
     public void stealFromOpposite(){}
     public Container getOpposite(){
         return this;
     }
+
     public void playPit()  {
-        Assert.assertTrue(false);  // TODO: throw a proper exception.
+        //Assert.assertTrue(false);
         System.out.println("Error: Tried playing a kalaha");
     }
 

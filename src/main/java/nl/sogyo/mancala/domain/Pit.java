@@ -88,16 +88,18 @@ class Pit extends Container {
         int[] finalScores = new int[2];
 
         if(isGameOver()){
-            finalScores[0] = this.myKalaha().emptyPit();
-            finalScores[1] = this.myKalaha().getNextContainer(7).emptyPit();
+            finalScores[0] = this.myKalaha().getNumberOfBeads();
+            finalScores[1] = this.myKalaha().getNextContainer(7).getNumberOfBeads();
 
-            this.printFinalScores(finalScores[0],finalScores[1]);
+            this.printFinalScores();
         }
         return finalScores;
     }
-    // It feels wrong to pass the scores in as variables here, but putting the printing in the above function
-    // would make it really long.
-    public void printFinalScores(int ownScore, int opponentScore){
+
+    public void printFinalScores(){
+
+        int ownScore = this.myKalaha().getNumberOfBeads();
+        int opponentScore = this.myKalaha().getNextContainer(7).getNumberOfBeads();
 
         System.out.println(this.getOwner() + " has scored " + ownScore + " points");
         System.out.println(this.getOwner().getOpponent() + " has scored " + opponentScore + " points");

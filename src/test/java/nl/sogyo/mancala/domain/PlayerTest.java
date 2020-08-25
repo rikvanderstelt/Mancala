@@ -6,7 +6,7 @@ import org.junit.Test;
 public class PlayerTest {
     @Test
     public void testFlipSelf() {
-        Player player1 = new Player(true, "player1");
+        Player player1 = new Player();
 
         player1.flipSelf();
 
@@ -15,7 +15,7 @@ public class PlayerTest {
 
     @Test
     public void testSwitchTurn() {
-        Player player1 = new Player(true,"player1");
+        Player player1 = new Player();
 
         player1.switchTurn();
 

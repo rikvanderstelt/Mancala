@@ -2,22 +2,22 @@ package nl.sogyo.mancala.domain;
 
 class Player {
     private boolean myTurn;
-    private Player opponent;
-    private String name;
+    private final Player opponent;
+    private final String name;
 
     public Player getOpponent(){
         return opponent;
     }
 
-    public Player(boolean myTurn, String name){
-
-        this.myTurn = myTurn;
-        this.name = name;
-        this.opponent = new Player(this,name);
+    public Player(){
+        this.myTurn = true;
+        this.name = "Player 1";
+        this.opponent = new Player(this);
     }
 
-    public Player(Player opponent, String name){
+    public Player(Player opponent){
         this.opponent = opponent;
+        this.name = "Player 2";
         this.myTurn = !this.opponent.isMyTurn();
     }
 
@@ -26,15 +26,6 @@ class Player {
     }
 
     public String toString() {return name;}
-
-    public void makeOpponents(Player player2){
-        if(myTurn != player2.myTurn){
-            player2.opponent = this;
-            this.opponent = player2;
-        } else {
-            System.out.println("Error: two players in same turn state");
-        }
-    }
 
     public void switchTurn(){
         this.flipSelf();

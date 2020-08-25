@@ -3,11 +3,11 @@ package nl.sogyo.mancala.domain;
 abstract class Container{
     private int numberOfBeads;
     private Container nextContainer;
-    private Player owner;
+    private final Player owner;
 
     public Container(){  // Constructor for the first pit
         numberOfBeads = 4;
-        owner = new Player(true, "Player 1");
+        owner = new Player();
         this.nextContainer = new Pit(1,owner);
         this.getNextContainer(13).nextContainer = this;  // Completes the circle
     }
@@ -23,7 +23,7 @@ abstract class Container{
         }
     }
 
-    public Container(Player owner){ // Constructor for Kalaha
+    public Container(Player owner){ // Constructor for Kalahas
         numberOfBeads = 0;
         this.owner = owner;
         if(this.isOwnersTurn()){
