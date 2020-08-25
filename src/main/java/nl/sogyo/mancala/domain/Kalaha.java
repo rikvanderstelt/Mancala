@@ -29,6 +29,10 @@ class Kalaha extends Container{
         }
     }
 
+    public Kalaha findMyKalaha(){
+        return this;
+    }
+
     public boolean gameOverCheck(){
         return true;
     }

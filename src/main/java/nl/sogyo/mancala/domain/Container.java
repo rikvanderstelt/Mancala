@@ -64,6 +64,7 @@ abstract class Container{
     public abstract void passBeads(int beadsPassed);
     public abstract boolean gameOverCheck();
     public abstract Container getOpposite();
+    public abstract Kalaha findMyKalaha();
 
     public boolean isOwnersTurn() {
         return owner.isMyTurn();

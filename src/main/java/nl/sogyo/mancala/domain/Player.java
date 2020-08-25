@@ -29,10 +29,7 @@ class Player {
 
     public void switchTurn(){
         this.flipSelf();
-        this.flipOpponent();
-    }
-    public void flipOpponent(){
-        opponent.flipSelf();
+        this.opponent.flipSelf();
     }
 
     public void flipSelf() {

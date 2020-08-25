@@ -104,7 +104,7 @@ public class PitTest {
 
         Assert.assertEquals(0,pit1.getNumberOfBeads());
         Assert.assertEquals(0,pit1.getNextContainer(12).getNumberOfBeads());
-        Assert.assertEquals(7,pit1.myKalaha().getNumberOfBeads());
+        Assert.assertEquals(7,pit1.findMyKalaha().getNumberOfBeads());
         // Kalaha should have 1 dropped in it during the play, 5 from pit 13(1 is added by the play) and 1 from pit 1.
     }
 
@@ -118,7 +118,7 @@ public class PitTest {
         pit1.getNextContainer(9).playPit();
         pit1.getNextContainer(4).playPit();
 
-        Assert.assertEquals(3,pit1.myKalaha().getNumberOfBeads());
+        Assert.assertEquals(3,pit1.findMyKalaha().getNumberOfBeads());
         Assert.assertEquals(1,pit1.getNextContainer(9).getNumberOfBeads());
         Assert.assertEquals(6,pit1.getNextContainer(12).getNumberOfBeads());
         Assert.assertEquals(5,pit1.getNumberOfBeads());
@@ -163,8 +163,8 @@ public class PitTest {
         Pit pit1 = new Pit();
 
         while (true){
-            pit1.gameEndCheck();
             if (pit1.isGameOver()){
+                pit1.printFinalScores();
                 break;
             }
             Assert.assertEquals( 48,pit1.totalBeadNumber());

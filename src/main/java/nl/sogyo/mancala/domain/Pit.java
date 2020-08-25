@@ -12,15 +12,8 @@ class Pit extends Container {
         super(i,owner);
     }
 
-    public Kalaha myKalaha(){
-        int j = 0;
-
-        for (int i=1;i<7;i++){             // Your kalaha is between 1 and 6 steps away from a pit
-            if(this.getNextContainer(i) instanceof Kalaha){
-                j=i;
-            }
-        }
-        return (Kalaha) this.getNextContainer(j);
+    public Kalaha findMyKalaha(){
+        return this.getNextContainer().findMyKalaha();
     }
 
     public void passBeads(int beadsPassed){
@@ -55,7 +48,7 @@ class Pit extends Container {
         Pit output = this;
         for (int i=1;i<7;i++){
             if (this.getNextContainer(i) instanceof Kalaha){
-                output = (Pit) myKalaha().getNextContainer(i);
+                output = (Pit) findMyKalaha().getNextContainer(i);
             }
         }
         return output;
@@ -63,9 +56,9 @@ class Pit extends Container {
 
     public void stealFromOpposite(){
         int beadsStolen = this.getOpposite().emptyPit();
-        this.myKalaha().addBead(beadsStolen);
+        this.findMyKalaha().addBead(beadsStolen);
         this.emptyPit();
-        this.myKalaha().addBead();
+        this.findMyKalaha().addBead();
     }
 
     public boolean isGameOver(){
@@ -88,8 +81,8 @@ class Pit extends Container {
         int[] finalScores = new int[2];
 
         if(isGameOver()){
-            finalScores[0] = this.myKalaha().getNumberOfBeads();
-            finalScores[1] = this.myKalaha().getNextContainer(7).getNumberOfBeads();
+            finalScores[0] = this.findMyKalaha().getNumberOfBeads();
+            finalScores[1] = this.findMyKalaha().getNextContainer(7).getNumberOfBeads();
 
             this.printFinalScores();
         }
@@ -98,8 +91,8 @@ class Pit extends Container {
 
     public void printFinalScores(){
 
-        int ownScore = this.myKalaha().getNumberOfBeads();
-        int opponentScore = this.myKalaha().getNextContainer(7).getNumberOfBeads();
+        int ownScore = this.findMyKalaha().getNumberOfBeads();
+        int opponentScore = this.findMyKalaha().getNextContainer(7).getNumberOfBeads();
 
         System.out.println(this.getOwner() + " has scored " + ownScore + " points");
         System.out.println(this.getOwner().getOpponent() + " has scored " + opponentScore + " points");
@@ -117,7 +110,6 @@ class Pit extends Container {
         int totalBeadNumber = this.getNumberOfBeads();
         for(int i=1; i<14; i++){
             totalBeadNumber += this.getNextContainer(i).getNumberOfBeads();
-        //    System.out.println(this.getNextContainer(i).getNumberOfBeads());
         }
         return totalBeadNumber;
     }
