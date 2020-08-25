@@ -45,13 +45,11 @@ class Pit extends Container {
     }
 
     public Container getOpposite(){
-        Pit output = this;
-        for (int i=1;i<7;i++){
-            if (this.getNextContainer(i) instanceof Kalaha){
-                output = (Pit) findMyKalaha().getNextContainer(i);
-            }
-        }
-        return output;
+        return this.getOpposite(0);
+    }
+
+    public Container getOpposite(int beadsBeforeKalaha){
+        return this.getNextContainer().getOpposite(beadsBeforeKalaha+1);
     }
 
     public void stealFromOpposite(){
