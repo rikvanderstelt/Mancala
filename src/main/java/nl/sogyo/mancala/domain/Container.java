@@ -62,10 +62,11 @@ abstract class Container{
     public abstract void stealFromOpposite();
     public abstract void playPit();
     public abstract void passBeads(int beadsPassed);
-    public abstract boolean gameOverCheck();
+    public abstract boolean emptyPitCheck();
     public abstract Container getOpposite();
     public abstract Container getOpposite(int i);
     public abstract Kalaha findMyKalaha();
+
 
     public boolean isOwnersTurn() {
         return owner.isMyTurn();

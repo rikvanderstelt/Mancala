@@ -38,7 +38,15 @@ class Kalaha extends Container{
         return this;
     }
 
-    public boolean gameOverCheck(){
+    public boolean isGameOver(){
+        if (this.isOwnersTurn()){
+            return this.getNextContainer(8).emptyPitCheck();
+        } else {
+            return this.getNextContainer(1).emptyPitCheck();
+        }
+    }
+
+    public boolean emptyPitCheck(){
         return true;
     }
 }

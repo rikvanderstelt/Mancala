@@ -60,20 +60,18 @@ class Pit extends Container {
     }
 
     public boolean isGameOver(){
-        if(isOwnersTurn()){
-            return this.gameOverCheck();
-        } else{
-            return this.getNextContainer(7).gameOverCheck(); // Checks only for the player whose turn it is.
+        return this.findMyKalaha().isGameOver();
+    }
+
+    public boolean emptyPitCheck(){
+        if(this.getNumberOfBeads() == 0){
+            return this.getNextContainer().emptyPitCheck();
+        } else {
+            return false;
         }
     }
 
-    public boolean gameOverCheck(){
-        boolean output = false;
-        if(this.getNumberOfBeads() == 0){
-            output = this.getNextContainer().gameOverCheck();
-        }
-        return output;
-    }
+
     // The final scores are returned in an array to make it easy to test them.
     public int[] gameEndCheck(){
         int[] finalScores = new int[2];
