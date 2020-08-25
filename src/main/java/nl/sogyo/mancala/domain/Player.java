@@ -13,6 +13,12 @@ class Player {
 
         this.myTurn = myTurn;
         this.name = name;
+        this.opponent = new Player(this,name);
+    }
+
+    public Player(Player opponent, String name){
+        this.opponent = opponent;
+        this.myTurn = !this.opponent.isMyTurn();
     }
 
     public boolean isMyTurn() {
@@ -30,6 +36,10 @@ class Player {
         }
     }
 
+    public void switchTurn(){
+        this.flipSelf();
+        this.flipOpponent();
+    }
     public void flipOpponent(){
         opponent.flipSelf();
     }

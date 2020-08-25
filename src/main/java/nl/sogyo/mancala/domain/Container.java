@@ -6,8 +6,7 @@ abstract class Container{
     private Player owner;
 
     public Container(){  // Constructor for the first pit
-        numberOfBeads = 0;
-        this.addBead(4);
+        numberOfBeads = 4;
         owner = new Player(true, "Player 1");
         this.nextContainer = new Pit(1,owner);
         this.getNextContainer(13).nextContainer = this;  // Completes the circle
@@ -15,9 +14,8 @@ abstract class Container{
 
 
     public Container(int i, Player owner) {  // Constructor for other Pits
-        numberOfBeads = 0;
+        numberOfBeads = 4;
         this.owner = owner;
-        this.addBead(4);
         if (i < 5) {
             this.nextContainer = new Pit(i + 1, owner);
         } else if (i == 5) {
@@ -28,10 +26,8 @@ abstract class Container{
     public Container(Player owner){ // Constructor for Kalaha
         numberOfBeads = 0;
         this.owner = owner;
-        if(this.isOwnersTurn()){     // Only creates a second player the first time a kalaha is made
-            Player player2 = new Player(false, "Player 2");
-            owner.makeOpponents(player2);
-            this.nextContainer = new Pit(0,player2);
+        if(this.isOwnersTurn()){
+            this.nextContainer = new Pit(0,owner.getOpponent());
         }
     }
 
@@ -80,7 +76,6 @@ abstract class Container{
     }
 
     public void endTurn(){
-        this.owner.flipSelf();
-        this.owner.flipOpponent();
+    this.owner.switchTurn();
     }
 }

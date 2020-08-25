@@ -14,14 +14,13 @@ public class PlayerTest {
     }
 
     @Test
-    public void testFlipOpponent() {
+    public void testSwitchTurn() {
         Player player1 = new Player(true,"player1");
-        Player player2 = new Player(false,"player2");
-        player1.makeOpponents(player2);
 
-        player2.flipOpponent();
+        player1.switchTurn();
 
         Assert.assertFalse(player1.isMyTurn());
+        Assert.assertTrue(player1.getOpponent().isMyTurn());
     }
 
     @Test

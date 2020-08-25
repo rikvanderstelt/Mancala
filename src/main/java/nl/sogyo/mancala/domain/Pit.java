@@ -12,7 +12,6 @@ class Pit extends Container {
         super(i,owner);
     }
 
-
     public Kalaha myKalaha(){
         int j = 0;
 
