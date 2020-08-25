@@ -6,38 +6,12 @@ class Pit extends Container {
 
     public Pit(){
         super();
-        int i = 0;
-        this.addBead(4);
-        owner = new Player(true, "Player 1");
-        this.setNextContainer(new Pit(i+1,owner));
-        this.getNextContainer(13).setNextContainer(this);  // Completes the circle
-        this.setOpposites();
     }
 
     public Pit(int i, Player owner){
-        super();
-        this.owner = owner;
-        this.addBead(4);
-        if (i<5) {
-            this.setNextContainer(new Pit(i + 1,owner));
-        } else if (i==5) {
-            this.setNextContainer(new Kalaha(owner));
-        }
+        super(i,owner);
     }
 
-    public void setOpposites(){
-        this.opposite = this.getNextContainer(12);
-        for (int i = 1; i<13; i++){
-            this.getNextContainer(i).opposite =this.getNextContainer(12-i);
-        }
-    }
-
-    public void stealFromOpposite(){
-        int beadsStolen = this.opposite.emptyPit();
-        this.myKalaha().addBead(beadsStolen);
-        this.emptyPit();
-        this.myKalaha().addBead();
-    }
 
     public Kalaha myKalaha(){
         int j = 0;
@@ -51,6 +25,7 @@ class Pit extends Container {
     }
 
     public void passBeads(int beadsPassed){
+
         if (beadsPassed > 1){
             this.addBead();
             this.getNextContainer().passBeads(beadsPassed-1);
@@ -73,8 +48,25 @@ class Pit extends Container {
         if((this.getNumberOfBeads() == 1)&&(this.isOwnersTurn())){
             this.stealFromOpposite();
         }
-        this.owner.flipSelf();
-        this.owner.flipOpponent();
+        super.endTurn();
+
+    }
+
+    public Container getOpposite(){
+        Pit output = this;
+        for (int i=1;i<7;i++){
+            if (this.getNextContainer(i) instanceof Kalaha){
+                output = (Pit) myKalaha().getNextContainer(i);
+            }
+        }
+        return output;
+    }
+
+    public void stealFromOpposite(){
+        int beadsStolen = this.getOpposite().emptyPit();
+        this.myKalaha().addBead(beadsStolen);
+        this.emptyPit();
+        this.myKalaha().addBead();
     }
 
     public boolean isGameOver(){
@@ -108,13 +100,13 @@ class Pit extends Container {
     // would make it really long.
     public void printFinalScores(int ownScore, int opponentScore){
 
-        System.out.println(this.owner + " has scored " + ownScore + " points");
-        System.out.println(this.owner.getOpponent() + " has scored " + opponentScore + " points");
+        System.out.println(this.getOwner() + " has scored " + ownScore + " points");
+        System.out.println(this.getOwner().getOpponent() + " has scored " + opponentScore + " points");
 
         if (ownScore > opponentScore) {
-            System.out.println("The winner is: " + this.owner );
+            System.out.println("The winner is: " + this.getOwner() );
         } else if (ownScore < opponentScore){
-            System.out.println("The winner is: " + this.owner.getOpponent());
+            System.out.println("The winner is: " + this.getOwner().getOpponent());
         } else {
             System.out.println("The game has ended in a draw!");
         }

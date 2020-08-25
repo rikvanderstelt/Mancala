@@ -1,7 +1,5 @@
 package nl.sogyo.mancala.domain;
 
-import org.junit.Assert;
-
 class Player {
     private boolean myTurn;
     private Player opponent;

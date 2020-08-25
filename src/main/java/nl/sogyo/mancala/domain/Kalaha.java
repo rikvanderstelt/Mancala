@@ -3,20 +3,18 @@ package nl.sogyo.mancala.domain;
 import org.junit.Assert;
 
 class Kalaha extends Container{
+
     public Kalaha(Player owner){
-        super();
-        this.owner = owner;
-        if(this.isOwnersTurn()){     // Only creates a second player the first time a kalaha is made
-            Player player2 = new Player(false, "Player 2");
-            owner.makeOpponents(player2);
-            this.setNextContainer(new Pit(0,player2));
-        }
+        super(owner);
+
     }
 
     public void stealFromOpposite(){}
-
+    public Container getOpposite(){
+        return this;
+    }
     public void playPit()  {
-        Assert.assertTrue(false);  // TODO: throw a proper exception
+        Assert.assertTrue(false);  // TODO: throw a proper exception.
         System.out.println("Error: Tried playing a kalaha");
     }
 
@@ -26,7 +24,7 @@ class Kalaha extends Container{
         if (isOwnersTurn()){
             this.addBead();
             this.getNextContainer().passBeads(beadsPassed-1);
-        } else{
+        } else {
             this.getNextContainer().passBeads(beadsPassed);
         }
     }

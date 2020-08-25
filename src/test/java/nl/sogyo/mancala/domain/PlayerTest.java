@@ -37,7 +37,7 @@ public class PlayerTest {
     public void testPlayerCreation(){
         Pit pit1 = new Pit();
 
-        Assert.assertEquals(pit1.owner,pit1.getNextContainer(7).owner.getOpponent());
+        Assert.assertEquals(pit1.getOwner(),pit1.getNextContainer(7).getOwner().getOpponent());
     }
 
 
