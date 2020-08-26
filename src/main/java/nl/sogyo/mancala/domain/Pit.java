@@ -16,16 +16,7 @@ class Pit extends Container {
         return this.getNextContainer().findMyKalaha();
     }
 
-    public void passBeads(int beadsPassed){
 
-        if (beadsPassed > 1){
-            this.addBead();
-            this.getNextContainer().passBeads(beadsPassed-1);
-        } else if (beadsPassed == 1){
-            this.addBead();
-            this.endTurn();
-        }
-    }
 
     public void playPit(){
         Assert.assertTrue(this.isOwnersTurn());
@@ -72,7 +63,7 @@ class Pit extends Container {
     }
 
 
-    // The final scores are returned in an array to make it easy to test them.
+    // The final scores are returned in an array to make it possible to test for them.
     public int[] gameEndCheck(){
         int[] finalScores = new int[2];
 

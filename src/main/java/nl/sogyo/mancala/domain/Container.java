@@ -9,7 +9,7 @@ abstract class Container{
         numberOfBeads = 4;
         owner = new Player();
         this.nextContainer = new Pit(1,owner);
-        this.getNextContainer(13).nextContainer = this;  // Completes the circle
+        this.getNextContainer(13).nextContainer = this;
     }
 
 
@@ -61,12 +61,19 @@ abstract class Container{
     }
     public abstract void stealFromOpposite();
     public abstract void playPit();
-    public abstract void passBeads(int beadsPassed);
     public abstract boolean emptyPitCheck();
     public abstract Container getOpposite();
     public abstract Container getOpposite(int i);
     public abstract Kalaha findMyKalaha();
 
+    public void passBeads(int beadsPassed) {
+        this.addBead();
+        if (beadsPassed > 1){
+            this.getNextContainer().passBeads(beadsPassed-1);
+        } else if (beadsPassed == 1){
+            this.endTurn();
+        }
+    }
 
     public boolean isOwnersTurn() {
         return owner.isMyTurn();
