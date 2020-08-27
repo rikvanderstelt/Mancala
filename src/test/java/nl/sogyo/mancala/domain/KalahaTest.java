@@ -31,8 +31,6 @@ public class KalahaTest {
         pit1.getNextContainer(2).playPit();
 
         Assert.assertTrue(pit1.isOwnersTurn());
-        Assert.assertTrue(!pit1.getNextContainer(12).isOwnersTurn());
+        Assert.assertFalse(pit1.getNextContainer(12).isOwnersTurn());
     }
-
-
 }

@@ -6,14 +6,14 @@ class Kalaha extends Container{
         super(owner);
     }
 
-    public void stealFromOpposite(){}
+
 
     public Container getOpposite(){
         return this.getNextContainer(7);
     }
 
-    public Container getOpposite(int beadsBeforeKalaha) {
-        return this.getNextContainer(beadsBeforeKalaha);
+    public Container getOpposite(int pitsBeforeKalaha) {
+        return this.getNextContainer(pitsBeforeKalaha);
     }
 
     public void playPit()  {
@@ -28,6 +28,7 @@ class Kalaha extends Container{
         }
     }
 
+    public void stealFromOpposite(){}
     public void endTurn(){}
 
     public Kalaha findMyKalaha(){

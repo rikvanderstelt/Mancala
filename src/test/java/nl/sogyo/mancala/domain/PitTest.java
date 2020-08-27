@@ -5,13 +5,13 @@ import org.junit.Test;
 
 public class PitTest {
     @Test
-    public void testgetNumberOfBeads() {
+    public void testGetNumberOfBeads() {
         Pit pit1 = new Pit();
         Player player1 = new Player();
 
         Assert.assertEquals("Newly made pit should have 4 beads",4, pit1.getNumberOfBeads());
         Kalaha kalaha1 = new Kalaha(player1);
-        Assert.assertEquals("Newly made kalaha should have 0 beads",0, kalaha1.getNumberOfBeads());
+        Assert.assertEquals("Newly made Kalaha should have 0 beads",0, kalaha1.getNumberOfBeads());
     }
 
     @Test
@@ -31,9 +31,9 @@ public class PitTest {
     public void testEmptyPit(){
         Pit pit1 = new Pit();
 
-        int testbeads = pit1.emptyPit();
+        int testBeads = pit1.emptyPit();
 
-        Assert.assertEquals(4,testbeads);
+        Assert.assertEquals(4,testBeads);
         Assert.assertEquals(pit1.getNumberOfBeads(),0);
     }
     @Test
@@ -167,10 +167,7 @@ public class PitTest {
             }
             Assert.assertEquals( 48,pit1.totalBeadNumber());
             int random = 1 + (int) (Math.random()*(14));
-            try {
-                pit1.getNextContainer(random).playPit();
-            } catch(AssertionError e){  // Makes sure no invalid moves are played
-            }
+            pit1.getNextContainer(random).playPit();
         }
     }
     */

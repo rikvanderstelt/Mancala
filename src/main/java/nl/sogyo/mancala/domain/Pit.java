@@ -1,7 +1,5 @@
 package nl.sogyo.mancala.domain;
 
-import org.junit.Assert;
-
 class Pit extends Container {
 
     public Pit(){
@@ -16,15 +14,13 @@ class Pit extends Container {
         return this.getNextContainer().findMyKalaha();
     }
 
-
-
     public void playPit(){
-        Assert.assertTrue(this.isOwnersTurn());
-        Assert.assertTrue(this.getNumberOfBeads() != 0);
-
-        int beadsPassed = this.emptyPit();
-
-        this.getNextContainer().passBeads(beadsPassed);
+        if ((this.isOwnersTurn()) && (this.getNumberOfBeads() != 0)){
+            int beadsPassed = this.emptyPit();
+            this.getNextContainer().passBeads(beadsPassed);
+        } else {
+            System.out.println("Error: cannot play this pit.");
+        }
     }
 
     public void endTurn(){
@@ -39,8 +35,8 @@ class Pit extends Container {
         return this.getOpposite(0);
     }
 
-    public Container getOpposite(int beadsBeforeKalaha){
-        return this.getNextContainer().getOpposite(beadsBeforeKalaha+1);
+    public Container getOpposite(int pitsBeforeKalaha){
+        return this.getNextContainer().getOpposite(pitsBeforeKalaha+1);
     }
 
     public void stealFromOpposite(){
