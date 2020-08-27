@@ -122,6 +122,7 @@ public class PitTest {
         Assert.assertEquals(1,pit1.getNextContainer(9).getNumberOfBeads());
         Assert.assertEquals(6,pit1.getNextContainer(12).getNumberOfBeads());
         Assert.assertEquals(5,pit1.getNumberOfBeads());
+        Assert.assertEquals(48, pit1.totalBeadNumber());
     }
 
     @Test
@@ -150,7 +151,6 @@ public class PitTest {
 
         Assert.assertArrayEquals(finalScores, correctScores);
     }
-
 
     /* The code below plays an entire, randomised game. Not a unit test,but it was very useful as I discovered
     a bug where playing an empty pit could create a new bead using this. Not sure where else to put this.

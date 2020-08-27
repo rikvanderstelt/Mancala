@@ -7,18 +7,17 @@ abstract class Container{
 
     public Container(){  // Constructor for the first pit
         numberOfBeads = 4;
-        owner = new Player();
-        this.nextContainer = new Pit(1,owner);
+        this.owner = new Player();
+        this.nextContainer = new Pit(2,owner);
         this.getNextContainer(13).nextContainer = this;
     }
 
-
-    public Container(int i, Player owner) {  // Constructor for other Pits
+    public Container(int pitNumber, Player owner) {  // Constructor for other Pits
         numberOfBeads = 4;
         this.owner = owner;
-        if (i < 5) {
-            this.nextContainer = new Pit(i + 1, owner);
-        } else if (i == 5) {
+        if (pitNumber < 6) {
+            this.nextContainer = new Pit(pitNumber + 1, owner);
+        } else if (pitNumber == 6) {
             this.nextContainer = new Kalaha(owner);
         }
     }
@@ -27,7 +26,7 @@ abstract class Container{
         numberOfBeads = 0;
         this.owner = owner;
         if(this.isOwnersTurn()){
-            this.nextContainer = new Pit(0,owner.getOpponent());
+            this.nextContainer = new Pit(1,owner.getOpponent());
         }
     }
 
@@ -61,7 +60,7 @@ abstract class Container{
     }
     public abstract void stealFromOpposite();
     public abstract void playPit();
-    public abstract boolean emptyPitCheck();
+    public abstract boolean allPitsEmptyCheck();
     public abstract Container getOpposite();
     public abstract Container getOpposite(int i);
     public abstract Kalaha findMyKalaha();

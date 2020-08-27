@@ -1,7 +1,5 @@
 package nl.sogyo.mancala.domain;
 
-import org.junit.Assert;
-
 class Kalaha extends Container{
 
     public Kalaha(Player owner){
@@ -19,7 +17,6 @@ class Kalaha extends Container{
     }
 
     public void playPit()  {
-        //Assert.assertTrue(false);
         System.out.println("Error: Tried playing a kalaha");
     }
 
@@ -39,13 +36,13 @@ class Kalaha extends Container{
 
     public boolean isGameOver(){
         if (this.isOwnersTurn()){
-            return this.getNextContainer(8).emptyPitCheck();
+            return this.getNextContainer(8).allPitsEmptyCheck();
         } else {
-            return this.getNextContainer(1).emptyPitCheck();
+            return this.getNextContainer(1).allPitsEmptyCheck();
         }
     }
 
-    public boolean emptyPitCheck(){
+    public boolean allPitsEmptyCheck(){
         return true;
     }
 }

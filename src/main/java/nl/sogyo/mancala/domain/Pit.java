@@ -8,8 +8,8 @@ class Pit extends Container {
         super();
     }
 
-    public Pit(int i, Player owner){
-        super(i,owner);
+    public Pit(int pitNumber, Player owner){
+        super(pitNumber,owner);
     }
 
     public Kalaha findMyKalaha(){
@@ -54,9 +54,9 @@ class Pit extends Container {
         return this.findMyKalaha().isGameOver();
     }
 
-    public boolean emptyPitCheck(){
+    public boolean allPitsEmptyCheck(){
         if(this.getNumberOfBeads() == 0){
-            return this.getNextContainer().emptyPitCheck();
+            return this.getNextContainer().allPitsEmptyCheck();
         } else {
             return false;
         }
