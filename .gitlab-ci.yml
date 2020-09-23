@@ -1,4 +1,8 @@
 test:
   script:
-    - echo "Testing"
-    - mvn test
+  - mvn verify
+  artifacts:
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
