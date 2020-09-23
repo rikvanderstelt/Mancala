@@ -5,28 +5,13 @@ abstract class Container{
     private Container nextContainer;
     private final Player owner;
 
-    public Container(){  // Constructor for the first pit
-        numberOfBeads = 4;
-        this.owner = new Player();
-        this.nextContainer = new Pit(2,owner);
-        this.getNextContainer(13).nextContainer = this;
-    }
-
-    public Container(int pitNumber, Player owner) {  // Constructor for other Pits
-        numberOfBeads = 4;
+    public Container(int numberOfBeads, Player owner, Container nextContainer, boolean isFirstContainer){
+        this.numberOfBeads = numberOfBeads;
         this.owner = owner;
-        if (pitNumber < 6) {
-            this.nextContainer = new Pit(pitNumber + 1, owner);
-        } else if (pitNumber == 6) {
-            this.nextContainer = new Kalaha(owner);
-        }
-    }
+        this.nextContainer = nextContainer;
 
-    public Container(Player owner){ // Constructor for Kalahas
-        numberOfBeads = 0;
-        this.owner = owner;
-        if(this.isOwnersTurn()){
-            this.nextContainer = new Pit(1,owner.getOpponent());
+        if(isFirstContainer){
+            this.getNextContainer(13).nextContainer = this;
         }
     }
 

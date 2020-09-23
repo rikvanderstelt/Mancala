@@ -3,10 +3,8 @@ package nl.sogyo.mancala.domain;
 class Kalaha extends Container{
 
     public Kalaha(Player owner){
-        super(owner);
+        super(0, owner, owner.isMyTurn() ? new Pit(1,owner.getOpponent()) : null, false);
     }
-
-
 
     public Container getOpposite(){
         return this.getNextContainer(7);

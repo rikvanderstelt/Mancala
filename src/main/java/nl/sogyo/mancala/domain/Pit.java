@@ -2,13 +2,14 @@ package nl.sogyo.mancala.domain;
 
 class Pit extends Container {
 
-    public Pit(){
-        super();
+    public Pit(Player owner){
+        super(4, owner,new Pit(2,owner), true);
     }
 
     public Pit(int pitNumber, Player owner){
-        super(pitNumber,owner);
+        super(4, owner, pitNumber<6 ? new Pit(pitNumber+1, owner) : new Kalaha(owner), false);
     }
+
 
     public Kalaha findMyKalaha(){
         return this.getNextContainer().findMyKalaha();

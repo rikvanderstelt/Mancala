@@ -6,7 +6,7 @@ import org.junit.Test;
 public class PitTest {
     @Test
     public void testGetNumberOfBeads() {
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         Player player1 = new Player();
 
         Assert.assertEquals("Newly made pit should have 4 beads",4, pit1.getNumberOfBeads());
@@ -16,20 +16,20 @@ public class PitTest {
 
     @Test
     public void testGetNextPit(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         Assert.assertTrue("A neighbouring pit must be able to be found ", pit1.getNextContainer() instanceof Pit);
     }
 
     @Test
     public void testIsOwnersTurn(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertTrue(pit1.isOwnersTurn());
     }
 
     @Test
     public void testEmptyPit(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         int testBeads = pit1.emptyPit();
 
@@ -38,7 +38,7 @@ public class PitTest {
     }
     @Test
     public void testChainBuilding(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertEquals(pit1,pit1
                 .getNextContainer(14));
@@ -46,7 +46,7 @@ public class PitTest {
 
     @Test
     public void testPitOpposites(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertEquals(pit1.getOpposite(), pit1.getNextContainer(12));
         Assert.assertEquals(pit1.getNextContainer(3).getOpposite(),pit1.getNextContainer(9));
@@ -54,7 +54,7 @@ public class PitTest {
 
     @Test
     public void testStealFromOpposite(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         pit1.getNextContainer(8).emptyPit();
         pit1.getNextContainer(8).stealFromOpposite();
 
@@ -63,7 +63,7 @@ public class PitTest {
     }
     @Test
     public void testPassBeads(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         pit1.passBeads(3);
 
@@ -74,7 +74,7 @@ public class PitTest {
     }
     @Test
     public void testPlayPit(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         pit1.playPit();
 
@@ -86,7 +86,7 @@ public class PitTest {
 
     @Test
     public void testEndingTurnOnPit(){  // No further special cases for the turn ending
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         pit1.getNextContainer(1).playPit();
 
@@ -96,7 +96,7 @@ public class PitTest {
 
     @Test
     public void testStealing(){ //Situation: pit 1 empty, pit 6 filled with 8, pit 13 with 4.
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         pit1.emptyPit();
         pit1.getNextContainer(5).addBead(4);
 
@@ -110,7 +110,7 @@ public class PitTest {
 
     @Test
     public void testMultipleMoves(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         pit1.getNextContainer(2).playPit();
         pit1.getNextContainer(5).playPit();
@@ -127,7 +127,7 @@ public class PitTest {
 
     @Test
     public void testIsGameOver(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         pit1.playPit();
         for(int i=7; i<13;i++){
             pit1.getNextContainer(i).emptyPit();
@@ -138,7 +138,7 @@ public class PitTest {
 
     @Test
     public void testFinalScoring(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         pit1.emptyPit();
         pit1.getNextContainer(6).addBead(5);
         pit1.getNextContainer(13).addBead(3);// so that player 1 has 5 points, player 2 has 3.
@@ -158,7 +158,7 @@ public class PitTest {
 
     @Test
     public void gameTest(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         while (true){
             if (pit1.isGameOver()){

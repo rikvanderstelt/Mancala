@@ -25,7 +25,7 @@ public class PlayerTest {
 
     @Test
     public void testContainerOwnership(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertEquals(pit1.isOwnersTurn(), pit1.getNextContainer(6).isOwnersTurn());
         Assert.assertTrue(pit1.getNextContainer(13).isOwnersTurn() != pit1.getNextContainer(4).isOwnersTurn());
@@ -34,7 +34,7 @@ public class PlayerTest {
 
     @Test
     public void testPlayerCreation(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertEquals(pit1.getOwner(),pit1.getNextContainer(7).getOwner().getOpponent());
     }

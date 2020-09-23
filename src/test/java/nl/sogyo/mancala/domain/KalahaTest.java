@@ -6,14 +6,14 @@ import org.junit.Test;
 public class KalahaTest {
     @Test
     public void testSettingUpKalahas(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         Assert.assertTrue(pit1.getNextContainer(6) instanceof Kalaha);
         Assert.assertTrue(pit1.getNextContainer(13) instanceof Kalaha);
     }
     @Test
     public void testPassOverKalahas() {
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
         pit1.addBead(12);
 
         pit1.playPit();
@@ -26,7 +26,7 @@ public class KalahaTest {
 
     @Test
     public void testEndingTurnOnKalaha(){
-        Pit pit1 = new Pit();
+        Pit pit1 = new Pit(new Player());
 
         pit1.getNextContainer(2).playPit();
 
