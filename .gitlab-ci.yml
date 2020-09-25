@@ -4,6 +4,11 @@ cache:
   paths:
     - .m2/repository
 
+build:
+  stage: build
+  script:
+    - 'mvn $MAVEN_CLI_OPTS verify site site:stage'
+
 test:
   stage: test
   script:
