@@ -1,5 +1,9 @@
 image: maven:latest
 
+cache:
+  paths:
+    - .m2/repository
+
 test:
   stage: test
   script:
