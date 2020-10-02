@@ -41,15 +41,28 @@ public class MancalaImpl implements Mancala {
     }
 
     public int[] playRecess(int index){
+        if(index == 1) {
+            firstPit.playPit();
+        } else if(index == 2){
+            Pit secondPit = (Pit) firstPit.getNextContainer();
+            secondPit.playPit();
 
-        firstPit.getNextContainer(index-1).playPit();
+        } else{
+            firstPit.getNextContainer(index - 1).playPit();
+        }
 
-        return this.exportGameState();
+        return exportGameState();
     }
 
     public int getStonesForPit(int index){
         assert (index>0&&index<15);
-        return firstPit.getNextContainer(index-1).getNumberOfBeads();
+        if (index == 1){
+            return firstPit.getNumberOfBeads();
+        } else if (index == 2){
+            return firstPit.getNextContainer().getNumberOfBeads();
+        } else {
+            return firstPit.getNextContainer(index - 1).getNumberOfBeads();
+        }
     }
 
     public int[] exportGameState(){
@@ -74,10 +87,22 @@ public class MancalaImpl implements Mancala {
     }
 
     public boolean isEndOfGame(){
-        return false;
+        return firstPit.isGameOver();
     }
 
     public String getWinnersName(){
-        return "Me";
+        if (isEndOfGame()){
+
+            if(getStonesForPit(7) == getStonesForPit(14)){
+                return "Nobody: it's a draw!";
+            } else if (getStonesForPit(7) >= getStonesForPit(14)){
+                return getPlayerName(1);
+            } else{
+                return getPlayerName(2);
+            }
+
+        } else{
+            return null;
+        }
     }
 }

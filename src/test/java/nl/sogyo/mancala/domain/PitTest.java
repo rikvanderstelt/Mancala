@@ -152,8 +152,8 @@ public class PitTest {
         Assert.assertArrayEquals(finalScores, correctScores);
     }
 
-    /* The code below plays an entire, randomised game. Not a unit test,but it was very useful as I discovered
-    a bug where playing an empty pit could create a new bead using this. Not sure where else to put this.
+//     The code below plays an entire, randomised game. Not a unit test,but it was very useful as I discovered
+//    a bug where playing an empty pit could create a new bead using this. Not sure where else to put this.
 
 
     @Test
@@ -170,6 +170,5 @@ public class PitTest {
             pit1.getNextContainer(random).playPit();
         }
     }
-    */
 
 }
