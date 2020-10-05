@@ -3,8 +3,6 @@ package nl.sogyo.mancala.domain;
 import org.junit.Test;
 import org.junit.Assert;
 
-import java.util.Arrays;
-
 
 public class MancalaImplTest {
 

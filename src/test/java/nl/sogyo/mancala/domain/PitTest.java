@@ -155,7 +155,7 @@ public class PitTest {
 //     The code below plays an entire, randomised game. Not a unit test,but it was very useful as I discovered
 //    a bug where playing an empty pit could create a new bead using this. Not sure where else to put this.
 
-
+    /*
     @Test
     public void gameTest(){
         Pit pit1 = new Pit(new Player());
@@ -169,6 +169,6 @@ public class PitTest {
             int random = 1 + (int) (Math.random()*(14));
             pit1.getNextContainer(random).playPit();
         }
-    }
+    }*/
 
 }
